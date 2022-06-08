@@ -3,8 +3,8 @@ include 'database.php';
 
 $uploadfile=$_FILES['uploadfile']['tmp_name'];
 
-require 'PHPExcel/Classes/PHPExcel.php';
-require_once 'PHPExcel/Classes/PHPExcel/IOFactory.php';
+require 'vendor/phpoffice/phpexcel/Classes/PHPExcel.php';
+require_once 'vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
 
 $objExcel=PHPExcel_IOFactory::load($uploadfile);
 foreach($objExcel->getWorksheetIterator() as $worksheet)
