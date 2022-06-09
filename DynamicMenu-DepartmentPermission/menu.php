@@ -16,7 +16,8 @@
       </li> -->
 <?php
 include 'database.php';
-$login_user=3;
+$login_user=1;
+$user_permission=false;
 ///fetch the department of user
 $userdeptqry="SELECT user_department FROM users where user_id='$login_user'";
 $userdeptres=mysqli_query($con,$userdeptqry);
