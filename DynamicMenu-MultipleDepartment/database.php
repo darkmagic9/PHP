@@ -1,5 +1,5 @@
 <?php
-$con=mysqli_connect('localhost','root','','dynamic_menu');
+$con=mysqli_connect('localhost','root','','dynamic_menu_multiple_department');
 
 if(mysqli_connect_errno())
 {
