@@ -30,7 +30,7 @@
 									$menulistqry  = "SELECT sub_menu.*,menu.menu_name,department.department_name from sub_menu ";
 									$menulistqry .= "inner join menu on menu.menu_id=sub_menu.menu_id ";
 									$menulistqry .= "inner join department on department.department_id=sub_menu.submenu_department ";
-									$menulistqry .= "where submenu_status='Enable'";
+									$menulistqry .= "where submenu_status='Enable' ORDER BY department_name, menu.menu_id, submenu_order";
 									$menulistres = mysqli_query($con, $menulistqry);
 									while ($menudata = mysqli_fetch_assoc($menulistres)) {
 									?>
