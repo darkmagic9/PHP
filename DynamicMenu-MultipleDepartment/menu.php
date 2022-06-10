@@ -23,7 +23,7 @@
       $submenuiddata = mysqli_fetch_assoc($submenuidres);
       $submenu_id = $submenuiddata['submenu_id'];
 
-      $login_user = 1;
+      $login_user = 2;
       // $user_permission = false;
       ///fetch the department of user
       $userdeptqry = "SELECT user_department FROM users where user_id='$login_user'";
@@ -46,8 +46,8 @@
       while ($menulistdata = mysqli_fetch_assoc($menulistres)) {
         $menu_id = $menulistdata['menu_id'];
 
-        $submenulistqry = "SELECT * FROM sub_menu where submenu_status='Enable' AND sub_menu.menu_id='$menu_id' AND submenu_display='Yes' AND sub_menu.submenu_department='$userdepartment' order by submenu_order asc";
-        //$submenulistqry = "SELECT * FROM sub_menu inner join submenu_department on submenu_department.sub_menu_id=sub_menu.submenu_id where submenu_status='Enable' AND sub_menu.menu_id='$menu_id' AND submenu_display='Yes' AND submenu_department.department_id='$userdepartment' order by submenu_order asc";
+        // $submenulistqry = "SELECT * FROM sub_menu where submenu_status='Enable' AND sub_menu.menu_id='$menu_id' AND submenu_display='Yes' AND sub_menu.submenu_department='$userdepartment' order by submenu_order asc";
+        $submenulistqry = "SELECT * FROM sub_menu inner join submenu_department on submenu_department.sub_menu_id=sub_menu.submenu_id where submenu_status='Enable' AND sub_menu.menu_id='$menu_id' AND submenu_display='Yes' AND submenu_department.department_id='$userdepartment' order by submenu_order asc";
         $submenulistres = mysqli_query($con, $submenulistqry);
         $submenutotal = mysqli_num_rows($submenulistres);
         if ($submenutotal > 0) {

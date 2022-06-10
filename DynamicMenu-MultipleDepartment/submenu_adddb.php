@@ -8,7 +8,7 @@ if(isset($_POST['submenu_submit']))
 	$submenu_url=$_POST['submenu_url'];
 	$submenu_display=$_POST['submenu_display'];
 	$submenu_order=$_POST['submenu_order'];
-	//$department_id=$_POST['department_id'];
+	$department_id=$_POST['department_id'];
 
 	if($submenu_name!='')
 	{

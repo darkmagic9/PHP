@@ -4,6 +4,7 @@
 
 <body>
 	<?php include 'menu.php'; ?>
+	<?php if ($user_permission != 'False') { ?>
 	<?php include 'database.php'; ?>
 	<div class="container-fluid">
 		<div class="row pt-3">
@@ -29,8 +30,9 @@
 									include 'database.php';
 									$menulistqry  = "SELECT sub_menu.*,menu.menu_name,department.department_name from sub_menu ";
 									$menulistqry .= "inner join menu on menu.menu_id=sub_menu.menu_id ";
-									$menulistqry .= "inner join department on department.department_id=sub_menu.submenu_department ";
-									$menulistqry .= "where submenu_status='Enable' AND department_id=$userdepartment ORDER BY department_name, menu.menu_id, submenu_order";
+									$menulistqry .= "INNER JOIN submenu_department ON submenu_department.sub_menu_id=sub_menu.submenu_id ";
+									$menulistqry .= "INNER JOIN department ON department.department_id=submenu_department.department_id ";
+									$menulistqry .= "WHERE submenu_status='Enable' AND department.department_id=$userdepartment ORDER BY department_name, menu.menu_id, submenu_order";
 									$menulistres = mysqli_query($con, $menulistqry);
 									while ($menudata = mysqli_fetch_assoc($menulistres)) {
 									?>
@@ -133,6 +135,12 @@
 			</div>
 		</div>
 	</div>
+    <?php
+    } else {
+        include 'permissiondenied.php';
+    }
+
+    ?>
 	<?php include 'footer.php'; ?>
 </body>
 
