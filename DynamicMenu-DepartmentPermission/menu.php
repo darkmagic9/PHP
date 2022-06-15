@@ -15,7 +15,21 @@
         <a class="nav-link" href="#">Pricing</a>
       </li> -->
       <?php
+      // error_reporting(E_ERROR);
       include 'database.php';
+      $url = basename($_SERVER['REQUEST_URI']);
+      echo "<script>console.log('". $url ."')</script>";
+      
+      ///get the sub menu id 
+      $submenuqry = "SELECT submenu_id from sub_menu where submenu_url='$url'";
+      $submenures = mysqli_query($con, $submenuqry);
+      $submenudata = mysqli_fetch_assoc($submenures);
+      if ($submenudata) {
+        $submenu_id = $submenudata['submenu_id'];
+      } else {
+        $submenu_id = "";
+      }
+
       $login_user = 1;
       
       ///check user name
@@ -24,11 +38,23 @@
       $userdta = mysqli_fetch_assoc($userres);
       if ($userdta) {
         $user_name = $userdta['user_name'];
+        $user_department = $userdta['user_department'];
       } else {
         $user_name = "";
+        $user_department = "";
       }
       
       
+      ///check menu access
+      $accessqry = "SELECT department_permission FROM menu_departmentaccess WHERE sub_menu_id='$submenu_id' AND department_id='$user_department'";
+      $accessres = mysqli_query($con, $accessqry);
+      $accessdta = mysqli_fetch_assoc($accessres);
+      if ($accessdta) {
+        $user_permission = $accessdta['department_permission'];
+      } else {
+        $user_permission = "";
+      }
+
       // $user_permission = false;
       ///fetch the department of user
       $userdeptqry = "SELECT user_department FROM users where user_id='$login_user'";
@@ -38,15 +64,16 @@
         $userdepartment = $userdeptdata['user_department'];
       } else {
         $userdepartment = "";
-      }
-      
+      }           
 
       $menulistqry = "SELECT * FROM menu where menu_status='Enable'";
       $menulistres = mysqli_query($con, $menulistqry);
       while ($menulistdata = mysqli_fetch_assoc($menulistres)) {
         $menu_id = $menulistdata['menu_id'];
 
-        $submenulistqry = "SELECT * FROM sub_menu where submenu_status='Enable' AND sub_menu.menu_id='$menu_id' AND submenu_display='Yes' AND sub_menu.submenu_department='$userdepartment' order by submenu_order asc";
+        $submenulistqry = "SELECT * FROM sub_menu inner join menu_departmentaccess on menu_departmentaccess.sub_menu_id=sub_menu.submenu_id ";
+        $submenulistqry .= "where submenu_status='Enable' AND sub_menu.menu_id='$menu_id' AND submenu_display='Yes' ";
+        $submenulistqry .= "AND menu_departmentaccess.department_permission='True' AND sub_menu.submenu_department='$userdepartment' order by submenu_order asc";
         $submenulistres = mysqli_query($con, $submenulistqry);
         $submenutotal = mysqli_num_rows($submenulistres);
         if ($submenutotal > 0) {
@@ -64,6 +91,7 @@
           </li>
       <?php }
       } ?>
+
       <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Setting
