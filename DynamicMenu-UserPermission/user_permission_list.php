@@ -40,7 +40,12 @@ while ($menudata=mysqli_fetch_assoc($menures)) {
 		$permissionqry="SELECT user_permission from menu_useraccess where sub_menu_id='$submenuid' AND user_id='$user_id'";
 		$permissionres=mysqli_query($con,$permissionqry);
 		$permissiondata=mysqli_fetch_assoc($permissionres);
-		$user_permission=$permissiondata['user_permission'];
+		if ($permissiondata) {
+			$user_permission=$permissiondata['user_permission'];
+		} else {
+			$user_permission="";
+		}
+		
 		?>
 		<select name="user_permission[]" class="form-control">
 			<?php

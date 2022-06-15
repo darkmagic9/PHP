@@ -30,7 +30,7 @@
         $submenu_id = "";
       }
 
-      $login_user = 1;
+      $login_user = 2;
 
       ///check user name
       $userqry = "SELECT * FROM `users` WHERE user_id='$login_user'";
@@ -58,7 +58,7 @@
       while ($menulistdata = mysqli_fetch_assoc($menulistres)) {
         $menu_id = $menulistdata['menu_id'];
 
-        $menuaccessqry = "SELECT * from menu_useraccess where menu_id='$menu_id' AND menu_useraccess.user_permission='True'";
+        $menuaccessqry = "SELECT * from menu_useraccess where menu_id='$menu_id' AND menu_useraccess.user_permission='True' AND user_id='$login_user'";
         $menuaccessres = mysqli_query($con, $menuaccessqry);
         $menuaccessrow = mysqli_num_rows($menuaccessres);
         if ($menuaccessrow > 0) {
@@ -101,7 +101,7 @@
         </a>
         <ul class="dropdown-menu">
           <li class="user-footer">
-            <a href="#" class="dropdown-item">Sign out</a>
+            <a href="user_permission.php" class="dropdown-item">Sign out</a>
           </li>
         </ul>
       </li>
