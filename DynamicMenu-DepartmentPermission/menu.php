@@ -64,7 +64,7 @@
           </li>
       <?php }
       } ?>
-      <li class="nav-item dropdown">
+      <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Setting
         </a>
@@ -73,7 +73,7 @@
           <a class="dropdown-item" href="submenu_add.php">Add Sub Menu</a>
           <a class="dropdown-item" href="user_permission.php">Permission</a>
         </div>
-      </li>
+      </li> -->
     </ul>
   </div>
   <div class="navbar-custom-menu">
@@ -84,7 +84,16 @@
         </a>
         <ul class="dropdown-menu">
           <li class="user-footer">
-            <a href="#" class="dropdown-item">Sign out</a>
+            <a href="menu_add.php" class="dropdown-item">Menu</a>
+          </li>
+          <li class="user-footer">
+            <a href="submenu_add.php" class="dropdown-item">Sub Menu</a>
+          </li>
+          <li class="user-footer">
+            <a href="department_permission.php" class="dropdown-item">Permission</a>
+          </li>
+          <li class="user-footer">
+            <a href="/PHP/" class="dropdown-item">Sign out</a>
           </li>
         </ul>
       </li>

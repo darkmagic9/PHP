@@ -104,10 +104,19 @@
       <li class="dropdown user user-menu">
         <a class="nav-link dropdown-toggle" href="#" class="dropdown-toggle" data-toggle="dropdown">
           <span><i class="fa fa-user"></i></span> <?php echo $user_name; ?>
-        </a>
+        </a>        
         <ul class="dropdown-menu">
           <li class="user-footer">
-            <a href="#" class="dropdown-item">Sign out</a>
+            <a href="menu_add.php" class="dropdown-item">Menu</a>
+          </li>
+          <li class="user-footer">
+            <a href="submenu_add.php" class="dropdown-item">Sub Menu</a>
+          </li>
+          <li class="user-footer">
+            <a href="user_permission.php" class="dropdown-item">Permission</a>
+          </li>
+          <li class="user-footer">
+            <a href="/PHP/" class="dropdown-item">Sign out</a>
           </li>
         </ul>
       </li>

@@ -30,7 +30,7 @@
         $submenu_id = "";
       }
 
-      $login_user = 2;
+      $login_user = 1;
 
       ///check user name
       $userqry = "SELECT * FROM `users` WHERE user_id='$login_user'";
@@ -101,7 +101,16 @@
         </a>
         <ul class="dropdown-menu">
           <li class="user-footer">
-            <a href="user_permission.php" class="dropdown-item">Sign out</a>
+            <a href="menu_add.php" class="dropdown-item">Menu</a>
+          </li>
+          <li class="user-footer">
+            <a href="submenu_add.php" class="dropdown-item">Sub Menu</a>
+          </li>
+          <li class="user-footer">
+            <a href="user_permission.php" class="dropdown-item">Permission</a>
+          </li>
+          <li class="user-footer">
+            <a href="/PHP/" class="dropdown-item">Sign out</a>
           </li>
         </ul>
       </li>
