@@ -18,6 +18,7 @@
 										<th>S.No</th>
 										<th>Menu Name</th>
 										<th>Menu Icon</th>
+										<th>Edit</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -31,6 +32,7 @@
 											<td><?php echo $menudata['menu_id']; ?></td>
 											<td><?php echo $menudata['menu_name']; ?></td>
 											<td><?php echo $menudata['menu_icon']; ?></td>
+											<td><input name="menu_submit" class="btn btn-primary" type="button" value="Edit" /></td>
 										</tr>
 									<?php
 									}

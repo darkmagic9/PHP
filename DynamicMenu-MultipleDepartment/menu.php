@@ -1,12 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Dynamic Menu</a>
+  <a class="navbar-brand" href="/PHP/">Dynamic Menu</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/PHP/DynamicMenu-MultipleDepartment/">Home <span class="sr-only">(current)</span></a>
       </li>
       <!--  <li class="nav-item">
         <a class="nav-link" href="#">Features</a>
@@ -21,15 +21,37 @@
       $submenuidqy = "SELECT * FROM sub_menu where submenu_url='$url'";
       $submenuidres = mysqli_query($con, $submenuidqy);
       $submenuiddata = mysqli_fetch_assoc($submenuidres);
-      $submenu_id = $submenuiddata['submenu_id'];
+      if ($submenuiddata) {
+        $submenu_id = $submenuiddata['submenu_id'];
+      } else {
+        $submenu_id = "";
+      }
+      
 
-      $login_user = 2;
+      $login_user = 1;
+      
+      ///check user name
+      $userqry = "SELECT * FROM `users` WHERE user_id='$login_user'";
+      $userres = mysqli_query($con, $userqry);
+      $userdta = mysqli_fetch_assoc($userres);
+      if ($userdta) {
+        $user_name = $userdta['user_name'];
+      } else {
+        $user_name = "";
+      }
+      
+      
       // $user_permission = false;
       ///fetch the department of user
       $userdeptqry = "SELECT user_department FROM users where user_id='$login_user'";
       $userdeptres = mysqli_query($con, $userdeptqry);
       $userdeptdata = mysqli_fetch_assoc($userdeptres);
-      $userdepartment = $userdeptdata['user_department'];
+      if ($userdeptdata) {
+        $userdepartment = $userdeptdata['user_department'];
+      } else {
+        $userdepartment = "";
+      }
+      
 
       //get department of submenu
       $deptqry = "SELECT * FROM submenu_department where sub_menu_id='$submenu_id' AND department_id='$userdepartment'";
@@ -75,6 +97,20 @@
           <a class="dropdown-item" href="user_permission.php">Permission</a>
         </div>
       </li> -->
+    </ul>
+  </div>
+  <div class="navbar-custom-menu">
+    <ul class="nav navbar-nav">
+      <li class="dropdown user user-menu">
+        <a class="nav-link dropdown-toggle" href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <span><i class="fa fa-user"></i></span> <?php echo $user_name; ?>
+        </a>
+        <ul class="dropdown-menu">
+          <li class="user-footer">
+            <a href="#" class="dropdown-item">Sign out</a>
+          </li>
+        </ul>
+      </li>
     </ul>
   </div>
 </nav>
