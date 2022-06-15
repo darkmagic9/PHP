@@ -15,8 +15,11 @@
         <a class="nav-link" href="#">Pricing</a>
       </li> -->
       <?php
+      // error_reporting(E_ERROR);
       include 'database.php';
       $url = basename($_SERVER['REQUEST_URI']);
+      echo "<script>console.log('". $url ."')</script>";
+      
       //GET SUBMENU ID 
       $submenuidqy = "SELECT * FROM sub_menu where submenu_url='$url'";
       $submenuidres = mysqli_query($con, $submenuidqy);
@@ -25,8 +28,7 @@
         $submenu_id = $submenuiddata['submenu_id'];
       } else {
         $submenu_id = "";
-      }
-      
+      }      
 
       $login_user = 1;
       
@@ -67,9 +69,11 @@
       $menulistres = mysqli_query($con, $menulistqry);
       while ($menulistdata = mysqli_fetch_assoc($menulistres)) {
         $menu_id = $menulistdata['menu_id'];
-
         // $submenulistqry = "SELECT * FROM sub_menu where submenu_status='Enable' AND sub_menu.menu_id='$menu_id' AND submenu_display='Yes' AND sub_menu.submenu_department='$userdepartment' order by submenu_order asc";
-        $submenulistqry = "SELECT * FROM sub_menu inner join submenu_department on submenu_department.sub_menu_id=sub_menu.submenu_id where submenu_status='Enable' AND sub_menu.menu_id='$menu_id' AND submenu_display='Yes' AND submenu_department.department_id='$userdepartment' order by submenu_order asc";
+        
+        $submenulistqry = "SELECT * FROM sub_menu inner join submenu_department on submenu_department.sub_menu_id=sub_menu.submenu_id ";
+        $submenulistqry .= "where submenu_status='Enable' AND sub_menu.menu_id='$menu_id' AND submenu_display='Yes' ";
+        $submenulistqry .= "AND submenu_department.department_id='$userdepartment' order by submenu_order asc";
         $submenulistres = mysqli_query($con, $submenulistqry);
         $submenutotal = mysqli_num_rows($submenulistres);
         if ($submenutotal > 0) {
@@ -87,6 +91,7 @@
           </li>
       <?php }
       } ?>
+
       <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Setting
