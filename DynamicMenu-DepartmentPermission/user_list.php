@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html>
 <?php include 'head.php';?>
-<body>
 <?php include 'menu.php';?>
 <?php 
  if($user_permission!='False')
@@ -16,5 +13,3 @@
 
  ?>
 <?php include 'footer.php';?>
-</body>
-</html>

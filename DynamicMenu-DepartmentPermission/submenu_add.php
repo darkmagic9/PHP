@@ -9,46 +9,45 @@
 		<div class="row pt-3">
 			<div class="col-md-6">
 				<div class="card card-primary card-outline">
-					<div class="card-body">
+					<div class="card-header">
 						<h4 class="card-title">Sub Menu List</h4>
-						<hr>
-						<div class="card-body table-responsive">
-							<table class="table table-striped">
-								<thead>
+					</div>
+					<div class="card-body table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>S.No</th>
+									<th>Menu Name</th>
+									<th>Sub Menu Name</th>
+									<th>Sub Menu Url</th>
+									<th>Sub Menu Order</th>
+									<th>Department</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+								include 'database.php';
+								$menulistqry  = "SELECT sub_menu.*,menu.menu_name,department.department_name from sub_menu ";
+								$menulistqry .= "inner join menu on menu.menu_id=sub_menu.menu_id ";
+								$menulistqry .= "inner join department on department.department_id=sub_menu.submenu_department ";
+								$menulistqry .= "where submenu_status='Enable' ORDER BY department_name, menu.menu_id, submenu_order";
+								$menulistres = mysqli_query($con, $menulistqry);
+								while ($menudata = mysqli_fetch_assoc($menulistres)) {
+								?>
 									<tr>
-										<th>S.No</th>
-										<th>Menu Name</th>
-										<th>Sub Menu Name</th>
-										<th>Sub Menu Url</th>
-										<th>Sub Menu Order</th>
-										<th>Department</th>
+										<td><?php echo $menudata['submenu_id']; ?></td>
+										<td><?php echo $menudata['menu_name']; ?></td>
+										<td><?php echo $menudata['submenu_name']; ?></td>
+										<td><?php echo $menudata['submenu_url']; ?></td>
+										<td><?php echo $menudata['submenu_order']; ?></td>
+										<td><?php echo $menudata['department_name']; ?></td>
 									</tr>
-								</thead>
-								<tbody>
-									<?php
-									include 'database.php';
-									$menulistqry  = "SELECT sub_menu.*,menu.menu_name,department.department_name from sub_menu ";
-									$menulistqry .= "inner join menu on menu.menu_id=sub_menu.menu_id ";
-									$menulistqry .= "inner join department on department.department_id=sub_menu.submenu_department ";
-									$menulistqry .= "where submenu_status='Enable' ORDER BY department_name, menu.menu_id, submenu_order";
-									$menulistres = mysqli_query($con, $menulistqry);
-									while ($menudata = mysqli_fetch_assoc($menulistres)) {
-									?>
-										<tr>
-											<td><?php echo $menudata['submenu_id']; ?></td>
-											<td><?php echo $menudata['menu_name']; ?></td>
-											<td><?php echo $menudata['submenu_name']; ?></td>
-											<td><?php echo $menudata['submenu_url']; ?></td>
-											<td><?php echo $menudata['submenu_order']; ?></td>
-											<td><?php echo $menudata['department_name']; ?></td>
-										</tr>
-									<?php
-									}
-									?>
+								<?php
+								}
+								?>
 
-								</tbody>
-							</table>
-						</div>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
