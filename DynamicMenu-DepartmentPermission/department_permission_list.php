@@ -28,6 +28,7 @@ $department_id = $_POST['department_id'];
 							$menuqry = "SELECT * from sub_menu ";
 							$menuqry .= "inner join menu on menu.menu_id=sub_menu.menu_id ";
 							$menuqry .= "where submenu_status='Enable' AND submenu_department = '$department_id'";
+							$menuqry .= "ORDER BY sub_menu.menu_id, sub_menu.submenu_id";
 							$menures = mysqli_query($con, $menuqry);
 							while ($menudata = mysqli_fetch_assoc($menures)) {
 							?>
