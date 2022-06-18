@@ -123,9 +123,9 @@
 									</select>
 								</div>
 							</div>
-							<div class="card-footer">
-								<input name="submenu_submit" class="btn btn-primary" type="submit" value="Add Sub Menu" />
-							</div>
+						</div>
+						<div class="card-footer">
+							<input name="submenu_submit" class="btn btn-primary" type="submit" value="Add Sub Menu" />
 						</div>
 					</form>
 				</div>

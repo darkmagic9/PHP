@@ -57,9 +57,9 @@
 								<input type="text" name="menu_icon" placeholder="Menu Icon" class="form-control" />
 							</div>
 						</div>
-						<div class="card-footer">
-							<input name="menu_submit" class="btn btn-primary" type="submit" value="Add Menu" />
-						</div>
+					</div>					
+					<div class="card-footer">
+						<input name="menu_submit" class="btn btn-primary" type="submit" value="Add Menu" />
 					</div>
 				</form>
 			</div>
