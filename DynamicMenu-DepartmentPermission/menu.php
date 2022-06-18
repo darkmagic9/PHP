@@ -1,5 +1,3 @@
-<body class="hold-transition layout-top-nav">
-<div class="wrapper">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="/PHP/">
     <img src="http://localhost/AdminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">

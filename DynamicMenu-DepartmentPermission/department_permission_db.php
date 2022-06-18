@@ -20,6 +20,6 @@ $department_id=$_POST['department_id'];
 	}
 }
 echo '<script>alert(" Permission is added successfully.");
-		window.location="department_permission.php";
+		window.location="index.php";
 </script>';
 ?>

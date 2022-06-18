@@ -1,0 +1,24 @@
+.elevation-3 {
+    margin-top: -.5rem;
+    margin-right: .2rem;
+    height: 33px;
+}
+
+.dropdown-menu.dropdown-menu-lg.dropdown-menu-right.show {
+    position: absolute;
+}
+
+.navbar-nav.ml-auto {
+    flex-direction: row;
+}
+
+.navbar-nav .nav-link {
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+@media (min-width: 992px) {
+    #navbarNavDropdown {
+        order: 0;
+    }
+}
