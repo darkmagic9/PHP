@@ -22,3 +22,7 @@
         order: 0;
     }
 }
+
+.toggle-off.btn {
+    padding-left: 20px;
+}
