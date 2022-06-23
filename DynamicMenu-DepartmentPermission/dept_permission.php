@@ -56,8 +56,7 @@
 						<?php if (isset($department_id)) { ?>
 							<form method="post" action="department_permission_db.php">
 								<div class="card-body">
-									<input type="hidden" name="department_id" value="<?php echo $department_id; ?>">
-									<table class="table">
+									<table class="table" id="recordListing">
 										<thead>
 											<tr>
 												<th>Menu</th>
@@ -121,11 +120,22 @@
 
 	<script>
 		$(function() {
+			var dataRecords = $('#recordListing').DataTable({
+				'serverMethod': 'post',		
+				"order":[],
+				"ajax":{
+					url:"department_permission_db.php",
+					type:"POST",
+					data:{action:'listRecords'},
+					dataType:"json"
+				},
+			});
+
 			$('.select2').select2()
 
 			$('.select2').select2({
 				ajax: {
-					url: 'https://api.github.com/orgs/select2/repos',
+					url: 'dept_json.php',
 					delay: 250, // wait 250 milliseconds before triggering the request
 					data: function(params) {
 						return {
@@ -134,10 +144,10 @@
 					},
 					processResults: function(response) {
 						return {
-							results: $.map(response, function(item) {
+							results: $.map(response.response, function(item) {
 								return {
-									text: item.language,
-									id: item.id
+									text: item.o_id,
+									id: item.mem_id
 								}
 							})
 						};
@@ -147,7 +157,16 @@
 			});
 			$('.select2').on('select2:select', function(e) {
 				const data = e.params.data;
+				const action = "getRecord";
 				console.log(data.id);
+				$.ajax({
+					url:"department_permission_db.php",
+					method:"POST",
+					data:{id:data.id, action:action},
+					success:function(data) {					
+						dataRecords.ajax.reload();
+					}
+				})
 			});
 			
 		});
