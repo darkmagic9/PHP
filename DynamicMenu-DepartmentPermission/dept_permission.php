@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css"/>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 	<link rel="stylesheet" href="my.css">
 </head>
@@ -30,27 +31,26 @@
 						<div class="card-header">
 							<h4 class="card-title">Department Permission</h4>
 						</div>
-						<form method="post" action="#">
-							<div class="card-body">
-								<div class="form-group">
-									<label>Select department</label>
-									<select class="form-control select2" name="department_id" id="dept_list">
-										<option value="">Select Department</option>
-										<?php
-										include 'database.php';
-										$departmentlistqry = "SELECT * FROM `department` where department_status='Enable'";
-										$departmentlistres = mysqli_query($con, $departmentlistqry);
-										while ($departmentdata = mysqli_fetch_assoc($departmentlistres)) {
-										?>
-											<option value="<?php echo $departmentdata['department_id']; ?>"><?php echo $departmentdata['department_name']; ?></option>
-										<?php } ?>
-									</select>
-								</div>
+						<div class="card-body">
+							<div class="form-group">
+								<label>Select department</label>
+								<select class="form-control select2" name="department_id" id="dept_list">
+								</select>
 							</div>
-							<div class="card-footer">
-								<input type="submit" name="permission_update" class="btn btn-primary">
-							</div>
-						</form>
+						</div>
+					</div>
+					<div class="card card-primary">
+						<div class="card-body">
+							<table class="table" id="orders">
+								<thead>
+									<tr>
+										<th>Menu</th>
+										<th>Sub Menu</th>
+										<th>Permission</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
 					</div>
 					<div class="card card-primary">
 						<?php if (isset($department_id)) { ?>
@@ -115,25 +115,15 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 	<script>
 		$(function() {
-			var dataRecords = $('#recordListing').DataTable({
-				'serverMethod': 'post',		
-				"order":[],
-				"ajax":{
-					url:"department_permission_db.php",
-					type:"POST",
-					data:{action:'listRecords'},
-					dataType:"json"
-				},
-			});
 
-			$('.select2').select2()
-
-			$('.select2').select2({
+			$('#dept_list').select2({
+				placeholder: 'Select Department',
 				ajax: {
 					url: 'dept_json.php',
 					delay: 250, // wait 250 milliseconds before triggering the request
@@ -144,29 +134,49 @@
 					},
 					processResults: function(response) {
 						return {
-							results: $.map(response.response, function(item) {
-								return {
-									text: item.o_id,
-									id: item.mem_id
-								}
-							})
+							results: response.data
+							// results: $.map(response, function(item) {
+							// 	return {
+							// 		text: item.language,
+							// 		id: item.id
+							// 	}
+							// })
 						};
 					},
 					cache: true
 				}
 			});
-			$('.select2').on('select2:select', function(e) {
+
+			// Disable search and ordering by default
+			$.extend( $.fn.dataTable.defaults, {
+				searching: false,
+				ordering:  false
+			} );
+
+			$('#dept_list').on('select2:select', function(e) {
 				const data = e.params.data;
 				const action = "getRecord";
 				console.log(data.id);
-				$.ajax({
-					url:"department_permission_db.php",
-					method:"POST",
-					data:{id:data.id, action:action},
-					success:function(data) {					
-						dataRecords.ajax.reload();
-					}
-				})
+				var filtertables = $('#orders').DataTable( {
+					destroy: true,
+					ordering: true,
+					info: false,
+					paging: false,
+					ajax: {
+						type: 'POST',
+						url: 'dept_jsontable.php',
+						'data': {
+						formName: data.id,
+						action: 'search'
+						}
+					},
+					columns: [
+						{ data: 'menu' },
+						{ data: 'submenu' },
+						{ defaultContent: '<input type="checkbox" data-toggle="toggle" data-on="True" data-off="False">' }
+					],
+
+				});
 			});
 			
 		});
