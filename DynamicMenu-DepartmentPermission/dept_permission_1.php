@@ -30,7 +30,10 @@
 				<div class="col-md-12">
 					<div class="card card-primary card-outline">
 						<div class="card-header">
-							<h4 class="card-title">Department Permission</h4>
+							<h4 class="card-title">
+								<i class="fa fa-sitemap"></i>
+								Department Permission
+							</h4>
 						</div>
 						<div class="card-body">
 							<div class="form-group">
@@ -42,7 +45,10 @@
 					</div>
 					<div class="card card-primary card-outline">
 						<div class="card-header">
-							<h4 class="card-title">Detial</h4>
+							<h4 class="card-title">
+								<i class="fa fa-table"></i>
+								Detial
+							</h4>
 						</div>
 						<div class="card-body">
 							<table class="table table-hover" id="orders" width="100%"></table>
