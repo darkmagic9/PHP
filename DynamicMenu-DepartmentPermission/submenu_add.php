@@ -18,7 +18,7 @@
 	<?php include 'database.php'; ?>
 	<div class="container-fluid">
 		<div class="row pt-3">
-			<div class="col-md-6">
+			<div class="col-md-7">
 				<div class="card card-primary card-outline">
 					<div class="card-header">
 						<h4 class="card-title">Sub Menu List</h4>
@@ -63,8 +63,8 @@
 				</div>
 			</div>
 
-			<div class="col-md-6">
-				<div class="card card-primary">
+			<div class="col-md-5">
+				<div class="card card-primary card-outline">
 					<div class="card-header">
 						<h4 class="card-title">Sub Menu Add</h4>
 					</div>

@@ -41,16 +41,11 @@
 						</div>
 					</div>
 					<div class="card card-primary card-outline">
+						<div class="card-header">
+							<h4 class="card-title">Detial</h4>
+						</div>
 						<div class="card-body">
-							<table class="table table-hover" id="orders" width="100%">
-								<thead>
-									<tr>
-										<th>Menu</th>
-										<th>Sub Menu</th>
-										<th>Permission</th>
-									</tr>
-								</thead>
-							</table>
+							<table class="table table-hover" id="orders" width="100%"></table>
 						</div>
 					</div>
 				</div>
@@ -97,65 +92,65 @@
 				}
 			});
 
-			// Disable search and ordering by default
-			$.extend( $.fn.dataTable.defaults, {
-				searching: false,
-				ordering:  false
-			} );
-
 			$('#dept_list').on('select2:select', function(e) {
 				const data = e.params.data;
 				const action = "getRecord";
-				// console.log(data.id);
-				var filtertables = $('#orders').DataTable( {
+				$.ajax({
+					type: 'POST',
+					url: 'dept_jsontable.php',
+					data: {
+						action: action,
+						formName: data.id
+					}
+				}).done(function(data) {
+					let tableData = []
+					console.log(data);
+					data.data.forEach(function(data, index) {
+						tableData.push([
+							`<input name="dept" type="hidden" value="${data.dept}"><input name="menuid" type="hidden" value="${data.menuid}"><input name="submenuid" type="hidden" value="${data.submenuid}">${data.menu}`,
+							data.submenu,
+							`<input class="toggle-event" data-id="${++index}" type="checkbox" ${data.permission == 'True' ? 'checked' : ''} data-toggle="toggle" data-on="True" data-off="False">`
+						])
+					})
+					initDataTables(tableData)
+				}).fail(function() {
+					Swal.fire({
+						text: 'Can not get data',
+						icon: 'error',
+						confirmButtonText: 'OK',
+					}).then(function() {
+						location.assign('dept_permission_1.php')
+					})
+				})
+			});
+
+			function initDataTables(tableData) {
+				$('#orders').DataTable({
 					destroy: true,
-					ordering: true,
+					searching: false,
+					ordering:  false,
 					info: false,
 					paging: false,
-					ajax: {
-						type: 'POST',
-						url: 'dept_jsontable.php',
-						data: {
-							formName: data.id,
-							action: action
-						}
-					},
+					data: tableData,
 					columns: [
-						{ data: null,
-							render: function ( data, type, row ) {
-								return `<input class="myHidden" type="hidden" value="${data.dept}"><input class="myHidden" type="hidden" value="${data.menuid}"><input class="myHidden" type="hidden" value="${data.submenuid}">${data.menu}`
-							}						
-						},
-						{ data: 'submenu' },
-						{ data: null, 
-							render: function ( data, type, row ) {
-								return `<input class="toggle-event" type="checkbox" ${(data.permission == 'True' ? 'checked' : '')} data-toggle="toggle" data-on="True" data-off="False">`
-							}
-						}
+						{ title: "Menu" , className: "align-middle"},
+						{ title: "Sub Menu" , className: "align-middle"},
+						{ title: "Permission" , className: "align-middle"}
 					],
-					initComplete: function () {
-						$(document).off('change').on('change', '.toggle-event', function(){
-							const rowdata = []
-							const $row = $(this).parents("tr");    // Find the row
-							const $tds = $row.find(".myHidden");
-							$.each($tds, function() {
-								rowdata.push($(this).val())
-								// console.log($(this).val());
-							});
-							if ($(this).prop("checked") == true) {
-								rowdata.push('True')
-								// console.log('True');
-							} else {
-								rowdata.push('False')
-								// console.log('False');
-							}
-							console.log(rowdata)
+					initComplete: function() {
+						$(document).off('change').on('change', '.toggle-event', function() {
+							let param = {}
+							param.dept = $(this).closest('tr').find('[name="dept"]').val()
+							param.menuid = $(this).closest('tr').find('[name="menuid"]').val()
+							param.submenuid = $(this).closest('tr').find('[name="submenuid"]').val()
+							param.status = $(this).prop("checked") ? 'True' : 'False'
+							console.log(param);
 							$.ajax({
 								type: 'POST',
 								url: 'dept_jsontable.php',
 								data: { 
-									action: 'updatemenu',
-									data: rowdata 
+									action: 'updatemenu1',
+									data: param 
 								}
 							}).done(function(resp) {
 								window.toastr.remove()
@@ -171,20 +166,13 @@
 					},
 					responsive: {
 						details: {
-							display: $.fn.dataTable.Responsive.display.modal( {
-								header: function ( row ) {
-									var data = row.data()
-									return 'Detial'
-								}
-							}),
-							renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+							renderer: $.fn.dataTable.Responsive.renderer.tableAll({
 								tableClass: 'table'
 							})
 						}
 					}
-
-				});
-			});
+				})
+			}
 			
 		});
 	</script>

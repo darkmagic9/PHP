@@ -56,7 +56,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'getRecord') {
 
 }
 
-if (isset($_POST['action']) && $_POST['action'] == 'updatemenu') {
+elseif (isset($_POST['action']) && $_POST['action'] == 'updatemenu') {
 
     $department_id = $_POST['data'][0];
     $menu_id = $_POST['data'][1];
@@ -86,7 +86,39 @@ if (isset($_POST['action']) && $_POST['action'] == 'updatemenu') {
         );
         echo json_encode($result);
     }
+    
+}
 
+elseif (isset($_POST['action']) && $_POST['action'] == 'updatemenu1') {
+
+    $department_id = $_POST["data"]["dept"];
+    $menu_id = $_POST["data"]["menuid"];
+    $submenu_id = $_POST["data"]["submenuid"];
+    $department_permission = $_POST["data"]["status"];
+
+    if($department_id!='')
+	{
+		$deleteqry="DELETE FROM menu_departmentaccess where department_id='$department_id' AND menu_id='$menu_id' AND sub_menu_id='$submenu_id'";
+		$delteres=mysqli_query($con,$deleteqry);
+		
+        $insertqry="INSERT INTO `menu_departmentaccess`( `menu_id`, `sub_menu_id`, `department_id`, `department_permission`) VALUES ('$menu_id','$submenu_id','$department_id','$department_permission')";
+        $insertres=mysqli_query($con,$insertqry);
+
+        http_response_code(200);
+        $result = array(
+            'status'=> true,
+            'message' => 'Update data success'
+        );
+        echo json_encode($result);
+
+	} else {
+        http_response_code(405);
+        $result = array(
+            'status'=> false,
+            'message' => 'Department is null'
+        );
+        echo json_encode($result);
+    }
     
 }
 
