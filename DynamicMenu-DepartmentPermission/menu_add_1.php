@@ -53,10 +53,10 @@
 											<td><?php echo $menudata['menu_icon']; ?></td>
 											<td>
 											<div class="btn-group" role="group">
-												<button type="button" class="btn btn-warning text-white update" id="<?php echo $menudata['menu_id']; ?>" data-id="<?php echo $menudata['menu_id']; ?>" data-index="<?php echo $menudata['menu_id']; ?>">
+												<button type="button" class="btn btn-sm btn-warning text-white update" id="<?php echo $menudata['menu_id']; ?>" data-id="<?php echo $menudata['menu_id']; ?>" data-index="<?php echo $menudata['menu_id']; ?>">
 													<i class="fa fa-edit"></i> Edit
 												</button>
-												<button type="button" class="btn btn-danger delete" id="<?php echo $menudata['menu_id']; ?>" data-id="<?php echo $menudata['menu_id']; ?>" data-index="<?php echo $menudata['menu_id']; ?>">
+												<button type="button" class="btn btn-sm btn-danger delete" id="<?php echo $menudata['menu_id']; ?>" data-id="<?php echo $menudata['menu_id']; ?>" data-index="<?php echo $menudata['menu_id']; ?>">
 													<i class="fa fa-trash"></i> Delete
 												</button>
 											</div>
@@ -144,7 +144,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
-	<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.18/dist/sweetalert2.all.min.js"></script>
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/r-2.3.0/datatables.min.js"></script>
