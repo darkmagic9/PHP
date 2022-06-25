@@ -19,12 +19,6 @@
 
 <body class="hold-transition layout-top-nav">
 	<div class="wrapper">
-		<?php include 'menu.php'; ?>
-		<?php
-		if (isset($_POST['department_id'])) {
-			$department_id = $_POST['department_id'];
-		}
-		?>
 		<div class="container-fluid">
 			<div class="row pt-3">
 				<div class="col-md-12">
