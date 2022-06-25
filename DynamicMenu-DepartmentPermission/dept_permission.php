@@ -19,6 +19,7 @@
 
 <body class="hold-transition layout-top-nav">
 	<div class="wrapper">
+		<?php include 'menu.php'; ?>
 		<div class="container-fluid">
 			<div class="row pt-3">
 				<div class="col-md-12">
