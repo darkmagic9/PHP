@@ -49,10 +49,10 @@
                             <!-- /.card-tools -->
 						</div>
 						<div class="card-body">                            
-                            <a href="#" class="btn btn-primary mb-3">
+                            <button type="button" name="add" id="addRecord" class="btn btn-primary mb-3">
                                 <i class="fas fa-plus"></i>
                                 Add Data
-                            </a>
+                            </button>
 							<table id="myTable" class="table table-striped"></table>
 						</div>
 					</div>
@@ -77,15 +77,24 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group row">
-							<label for="inputMenuName" class="col-sm-3 col-form-label">Menu Update</label>
+							<label for="inputEmail3" class="col-sm-3 col-form-label">User</label>
 							<div class="col-sm-9">
-								<input type="text" id="menu_name" name="menu_name" placeholder="Menu Name" class="form-control" required />
+								<input type="text" id="user_name" name="user_name" placeholder="User Name" class="form-control" required />
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="inputMenuIcon" class="col-sm-3 col-form-label">Menu Icon</label>
+							<label for="inputEmail3" class="col-sm-3 col-form-label">Department</label>
 							<div class="col-sm-9">
-								<input type="text" id="menu_icon" name="menu_icon" placeholder="Menu Icon" class="form-control" />
+								<select class="form-control" name="department_id">
+                                    <option value="">Select Department</option>
+                                    <?php
+                                    $deptlistqry = "SELECT * from department where department_status='Enable'";
+                                    $deptlistres = mysqli_query($con, $deptlistqry);
+                                    while ($deptdata = mysqli_fetch_assoc($deptlistres)) {
+                                    ?>
+                                        <option value="<?php echo $deptdata['department_id']; ?>"><?php echo $deptdata['department_name']; ?></option>
+                                    <?php } ?>
+                                </select>
 							</div>
 						</div>
 					</div>
@@ -115,10 +124,42 @@
             let dataRecords = $('#myTable').DataTable({
                 autoWidth: false,
                 responsive: true,
+                ajax: {
+                    type: 'POST',
+                    url: 'usersdb.php',
+                    data: {action: 'listRecords'},
+                    error: function (xhr, error, thrown) {
+                        toastr.error('The combination of name and company has to be unique')  
+                    }
+                },
                 columns: [
-                    { title: "No", className: "align-middle"},
-                    { title: "User", className: "align-middle"},
-                    { title: "Department", className: "align-middle"},
+                    {
+                        title: 'No', 
+                        className: 'align-middle',
+                        data: 'user_id'
+                    },
+                    {
+                        title: "User", 
+                        className: "align-middle",
+                        data: 'user_name'
+                    },
+                    {
+                        title: "Department", 
+                        className: "align-middle",
+                        data: 'department_name'
+                    },
+                    {
+                        title: "Action", 
+                        className: "align-middle",
+                        data: null, render: function(data, type, row) {
+                            return `<button type="button" class="btn btn-sm btn-warning text-white update" id="${data.user_id}" data-id="${data.user_id}" data-index="${data.user_id}">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-danger delete" id="${data.user_id}" data-id="${data.user_id}" data-index="${data.user_id}">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>`
+                        }
+                    },
                 ],
                 responsive: {
                     details: {
@@ -128,6 +169,84 @@
                     }
                 }
             })
+
+            $('#addRecord').click(function(){
+                $('#editModal').modal('show');
+                $('#editForm')[0].reset();
+                $('.modal-title').html("<i class='fa fa-plus'></i> Add User");
+                $('#action').val('addRecord');
+                $('#save').val('Add');
+            })
+
+            $('#myTable').on('click', '.update', function() {
+				let id = $(this).attr('id');
+				console.log(`on update : ${id}`);
+				$.ajax({
+					type: 'POST',
+					url: 'usersdb.php',
+					data: {
+						action: 'getRecord',
+						data: id
+					}
+				}).done(function(resp) {
+					console.log(resp);
+					$('#editModal').modal('show')
+					$('#id').val(resp.data.user_id)
+					$('#user_name').val('dfasfdasf')
+					$('#department_id').val('2')
+					$('.modal-title').html('<i class="fas fa-plus"></i> Edit User')
+					$('#action').val('editRecord')
+					$('#save').val('Save changes')
+				})
+			})
+
+            $('#editModal').on('submit','#editForm', function(event) {
+				event.preventDefault();
+				$('#save').attr('disable','disable')
+				let formData = $(this).serialize();
+				$.ajax({
+					type: 'POST',
+					url: 'usersdb.php',
+					data: formData
+				}).done(function(resp) {
+					$('#editForm')[0].reset();
+					$('#editModal').modal('hide');				
+					$('#save').attr('disabled', false);
+					location.reload()
+				})
+			})
+
+			$('#myTable').on('click', '.delete', function() {
+				let id = $(this).attr('id')
+				Swal.fire({
+					text: 'Are you sure...to delete this entry?',
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Yes! Delete now',
+					cancelButtonText: 'Cancel'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						$.ajax({
+							type: 'POST',
+							url: 'usersdb.php',
+							data: {
+								action: 'deleteRecord',
+								data: id
+							}
+						}).done(function() {
+							Swal.fire({
+								title: 'Deleted!',
+								text: 'Your list has been deleted.',
+								icon: 'success',
+								confirmButtunText: 'OK'
+							}).then((result) => {
+								location.reload()
+							})
+						})
+					}
+				})
+
+			})
         })
     </script>
 
