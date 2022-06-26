@@ -41,7 +41,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == 'editRecord') {
 	} else {
 		http_response_code(405);
 		$result = array(
-			'status'=> true,
+			'status'=> false,
 			'message' => 'Edit data fail.'
 		);
 		echo json_encode($result);
@@ -62,7 +62,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == 'deleteRecord') {
 	} else {
 		http_response_code(405);
 		$result = array(
-			'status'=> true,
+			'status'=> false,
 			'message' => 'Delete data fail.'
 		);
 		echo json_encode($result);
