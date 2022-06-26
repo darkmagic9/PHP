@@ -50,23 +50,37 @@ elseif (isset($_POST['action']) && $_POST['action'] == 'getRecord') {
 	echo json_encode($result);
 
 } 
+elseif (isset($_POST['action']) && $_POST['action'] == 'addRecord') {
+	$user_name = $_POST["user_name"];
+	$user_department = $_POST["department_id"];
+	if ($user_name != '') {
+		$updateqry="INSERT INTO `users`( `user_name`, `user_department`, `user_status`) VALUES ('$user_name','$user_department','Enable')";
+		$updateres=mysqli_query($con,$updateqry);
+
+		http_response_code(200);
+		$result = array(
+			'status'=> true,
+			'message' => 'Add data success'
+		);
+		echo json_encode($result);
+	} else {
+		http_response_code(405);
+		$result = array(
+			'status'=> false,
+			'message' => 'Add data fail.'
+		);
+		echo json_encode($result);
+	}
+}
 elseif (isset($_POST['action']) && $_POST['action'] == 'editRecord') {
-	$users_id = $_POST["id"];
-	$menu_id = $_POST["menu_id"];
-	$users_name = $_POST["users_name"];
-	$users_url = $_POST["users_url"];
-	$users_display = $_POST["users_display"];
-	$users_order = $_POST["users_order"];
-	$department_id = $_POST["department_id"];
-	if ($users_id != '') {
-		$updateqry="UPDATE sub_menu SET ";
-		$updateqry.="menu_id='$menu_id', ";
-		$updateqry.="users_name='$users_name', ";
-		$updateqry.="users_url='$users_url', ";
-		$updateqry.="users_display='$users_display', ";
-		$updateqry.="users_order='$users_order', ";
-		$updateqry.="users_department='$department_id' ";
-		$updateqry.="WHERE users_id='$users_id'";
+	$user_id = $_POST["id"];
+	$user_name = $_POST["user_name"];
+	$user_department = $_POST["department_id"];
+	if ($user_id != '') {
+		$updateqry="UPDATE users SET ";
+		$updateqry.="user_name='$user_name', ";
+		$updateqry.="user_department='$user_department' ";
+		$updateqry.="WHERE user_id='$user_id'";
 		$updateres=mysqli_query($con,$updateqry);
 
 		http_response_code(200);
@@ -78,16 +92,16 @@ elseif (isset($_POST['action']) && $_POST['action'] == 'editRecord') {
 	} else {
 		http_response_code(405);
 		$result = array(
-			'status'=> true,
+			'status'=> false,
 			'message' => 'Edit data fail.'
 		);
 		echo json_encode($result);
 	}
 }
 elseif (isset($_POST['action']) && $_POST['action'] == 'deleteRecord') {
-	$users_id = $_POST["data"];
-	if ($users_id != '') {
-		$updateqry="UPDATE sub_menu SET users_status='Disable' WHERE users_id='$users_id'";
+	$user_id = $_POST["data"];
+	if ($user_id != '') {
+		$updateqry="UPDATE users SET user_status='Disable' WHERE user_id='$user_id'";
 		$updateres=mysqli_query($con,$updateqry);
 		
 		http_response_code(200);
@@ -99,7 +113,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == 'deleteRecord') {
 	} else {
 		http_response_code(405);
 		$result = array(
-			'status'=> true,
+			'status'=> false,
 			'message' => 'Delete data fail.'
 		);
 		echo json_encode($result);

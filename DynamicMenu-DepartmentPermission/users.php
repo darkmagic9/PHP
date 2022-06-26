@@ -85,7 +85,7 @@
 						<div class="form-group row">
 							<label for="inputEmail3" class="col-sm-3 col-form-label">Department</label>
 							<div class="col-sm-9">
-								<select class="form-control" name="department_id">
+								<select class="form-control" id="department_id" name="department_id" required>
                                     <option value="">Select Department</option>
                                     <?php
                                     $deptlistqry = "SELECT * from department where department_status='Enable'";
@@ -192,8 +192,8 @@
 					console.log(resp);
 					$('#editModal').modal('show')
 					$('#id').val(resp.data.user_id)
-					$('#user_name').val('dfasfdasf')
-					$('#department_id').val('2')
+					$('#user_name').val(resp.data.user_name)
+					$('#department_id').val(resp.data.user_department)
 					$('.modal-title').html('<i class="fas fa-plus"></i> Edit User')
 					$('#action').val('editRecord')
 					$('#save').val('Save changes')
