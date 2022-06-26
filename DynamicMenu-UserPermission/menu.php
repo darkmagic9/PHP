@@ -97,7 +97,7 @@
     <ul class="nav navbar-nav">
       <li class="dropdown user user-menu">
         <a class="nav-link dropdown-toggle" href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <span><i class="fa fa-user"></i></span> <?php echo $user_name; ?>
+          <span><i class="fas fa-user"></i></span> <?php echo $user_name; ?>
         </a>
         <ul class="dropdown-menu">
           <li class="user-footer">

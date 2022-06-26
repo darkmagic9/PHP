@@ -13,16 +13,13 @@
 </head>
 <body class="hold-transition layout-top-nav">
 <div class="wrapper">
-
 	<?php include 'menu.php'; ?>
     <?php 
-    if($user_permission!='False')
-    {
+    if($user_permission!='False') { 
     ?>
-        <h4>Category Add</h4>
+    <h4>User Add</h4>
     <?php 
-    }else
-    {
+    } else {
         include 'permissiondenied.php';
     }
     ?>

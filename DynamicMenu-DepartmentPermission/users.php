@@ -20,91 +20,51 @@
 <body class="hold-transition layout-top-nav">
 	<div class="wrapper">
 		<?php include 'menu.php'; ?>
+        <?php 
+        if($user_permission!='False') {        
+        ?>
 		<div class="container-fluid">
 			<div class="row pt-3">
-				<div class="col-md-7">
+				<div class="col-12">
 					<div class="card card-primary card-outline">
 						<div class="card-header">
 							<h4 class="card-title">
 								<i class="fas fa-sitemap"></i>
-								Menu List
+								Users List
 							</h4>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="card-refresh" data-source="widgets.html" data-source-selector="#card-refresh-content" data-load-on-init="false">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <!-- /.card-tools -->
 						</div>
-						<div class="card-body table-responsive">
-							<table id="myTable" class="table table-striped">
-								<thead>
-									<tr>
-										<th>S.No</th>
-										<th>Menu Name</th>
-										<th>Menu Icon</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
-									include 'database.php';
-									$menulistqry = "SELECT * from menu where menu_status='Enable'";
-									$menulistres = mysqli_query($con, $menulistqry);
-									while ($menudata = mysqli_fetch_assoc($menulistres)) {
-									?>
-										<tr>
-											<td><?php echo $menudata['menu_id']; ?></td>
-											<td><?php echo $menudata['menu_name']; ?></td>
-											<td><?php echo $menudata['menu_icon']; ?></td>
-											<td>
-											<div class="btn-group" role="group">
-												<button type="button" class="btn btn-sm btn-warning text-white update" id="<?php echo $menudata['menu_id']; ?>" data-id="<?php echo $menudata['menu_id']; ?>" data-index="<?php echo $menudata['menu_id']; ?>">
-													<i class="fas fa-edit"></i> Edit
-												</button>
-												<button type="button" class="btn btn-sm btn-danger delete" id="<?php echo $menudata['menu_id']; ?>" data-id="<?php echo $menudata['menu_id']; ?>" data-index="<?php echo $menudata['menu_id']; ?>">
-													<i class="fas fa-trash"></i> Delete
-												</button>
-											</div>
-											</td>
-										</tr>
-									<?php
-									}
-									?>
-
-								</tbody>
-							</table>
+						<div class="card-body">                            
+                            <a href="#" class="btn btn-primary mb-3">
+                                <i class="fas fa-plus"></i>
+                                Add Data
+                            </a>
+							<table id="myTable" class="table table-striped"></table>
 						</div>
-					</div>
-				</div>
-
-				<div class="col-md-5">
-					<div class="card card-primary card-outline">
-						<div class="card-header">
-							<h4 class="card-title">
-								<i class="fas fa-table"></i>
-								Menu Add
-							</h4>
-						</div>
-						<form method="post" action="menu_adddb.php">
-							<div class="card-body">
-								<div class="form-group row">
-									<label for="inputMenuName" class="col-sm-3 col-form-label">Menu Name</label>
-									<div class="col-sm-9">
-										<input type="text" name="menu_name" placeholder="Menu Name" class="form-control" />
-									</div>
-								</div>
-								<div class="form-group row">
-									<label for="inputMenuIcon" class="col-sm-3 col-form-label">Menu Icon</label>
-									<div class="col-sm-9">
-										<input type="text" name="menu_icon" placeholder="Menu Icon" class="form-control" />
-									</div>
-								</div>
-							</div>					
-							<div class="card-footer">
-								<input name="menu_submit" class="btn btn-primary" type="submit" value="Add Menu" />
-							</div>
-						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-
+        <?php 
+        } else {
+            include 'permissiondenied.php';
+        }
+        ?>
+    </div>
 	<div class="modal" id="editModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<form method="post" id="editForm">
@@ -132,7 +92,6 @@
 					<div class="modal-footer">
     					<input type="hidden" name="id" id="id" />
     					<input type="hidden" name="action" id="action" value="" />
-						<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
     					<input type="submit" class="btn btn-primary" name="save" id="save" value="Save" />
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					</div>
@@ -152,80 +111,25 @@
 	<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 
 	<script>
-		$(function() {
-			let dataRecords = $('#myTable').DataTable();
-
-			$('#myTable').on('click', '.update', function() {
-				let id = $(this).attr('id');
-				console.log(`on update : ${id}`);
-				$.ajax({
-					type: 'POST',
-					url: 'menu_adddb_1.php',
-					data: {
-						action: 'getRecord',
-						data: id
-					}
-				}).done(function(resp) {
-					console.log(resp);
-					$('#editModal').modal('show')
-					$('#id').val(resp.data.menu_id)
-					$('#menu_name').val(resp.data.menu_name)
-					$('#menu_icon').val(resp.data.menu_icon)
-					$('.modal-title').html('<i class="fas fa-plus"></i> Edit Menu')
-					$('#action').val('editRecord')
-					$('#save').val('Save changes')
-				})
-			})
-
-			$('#editModal').on('submit','#editForm', function(event) {
-				event.preventDefault();
-				$('#save').attr('disable','disable')
-				let formData = $(this).serialize();
-				$.ajax({
-					type: 'POST',
-					url: 'menu_adddb_1.php',
-					data: formData
-				}).done(function(resp) {
-					$('#editForm')[0].reset();
-					$('#editModal').modal('hide');				
-					$('#save').attr('disabled', false);
-					location.reload()
-				})
-			})
-
-			$('#myTable').on('click', '.delete', function() {
-				let id = $(this).attr('id')
-				Swal.fire({
-					text: 'Are you sure...to delete this entry?',
-					icon: 'warning',
-					showCancelButton: true,
-					confirmButtonText: 'Yes! Delete now',
-					cancelButtonText: 'Cancel'
-				}).then((result) => {
-					if (result.isConfirmed) {
-						$.ajax({
-							type: 'POST',
-							url: 'menu_adddb_1.php',
-							data: {
-								action: 'deleteRecord',
-								data: id
-							}
-						}).done(function() {
-							Swal.fire({
-								title: 'Deleted!',
-								text: 'Your list has been deleted.',
-								icon: 'success',
-								confirmButtunText: 'OK'
-							}).then((result) => {
-								location.reload()
-							})
-						})
-					}
-				})
-
-			})
-		})
-	</script>
+        $(function() {
+            let dataRecords = $('#myTable').DataTable({
+                autoWidth: false,
+                responsive: true,
+                columns: [
+                    { title: "No", className: "align-middle"},
+                    { title: "User", className: "align-middle"},
+                    { title: "Department", className: "align-middle"},
+                ],
+                responsive: {
+                    details: {
+                        renderer: $.fn.dataTable.Responsive.renderer.tableAll({
+                            tableClass: 'table'
+                        })
+                    }
+                }
+            })
+        })
+    </script>
 
 </body>
 

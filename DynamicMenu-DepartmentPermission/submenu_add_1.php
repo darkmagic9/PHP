@@ -7,7 +7,7 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>Dynamic Menu</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/r-2.3.0/datatables.min.css"/>
@@ -27,7 +27,7 @@
 					<div class="card card-primary card-outline">
 						<div class="card-header">
 							<h4 class="card-title">
-								<i class="fa fa-sitemap"></i>
+								<i class="fas fa-sitemap"></i>
 								Sub Menu List
 							</h4>
 						</div>
@@ -65,10 +65,10 @@
 											<td>
 											<div class="btn-group" role="group">
 												<button type="button" class="btn btn-sm btn-warning text-white update" id="<?php echo $menudata['submenu_id']; ?>" data-id="<?php echo $menudata['submenu_id']; ?>" data-index="<?php echo $menudata['submenu_id']; ?>">
-													<i class="fa fa-edit"></i> Edit
+													<i class="fas fa-edit"></i> Edit
 												</button>
 												<button type="button" class="btn btn-sm btn-danger delete" id="<?php echo $menudata['submenu_id']; ?>" data-id="<?php echo $menudata['submenu_id']; ?>" data-index="<?php echo $menudata['submenu_id']; ?>">
-													<i class="fa fa-trash"></i> Delete
+													<i class="fas fa-trash"></i> Delete
 												</button>
 											</div>
 											</td>
@@ -87,7 +87,7 @@
 					<div class="card card-primary card-outline">
 						<div class="card-header">
 							<h4 class="card-title">
-								<i class="fa fa-table"></i>
+								<i class="fas fa-table"></i>
 								Sub Menu Add
 							</h4>
 						</div>
@@ -290,7 +290,7 @@
 					$('#submenu_display').val(resp.data.submenu_display)
 					$('#submenu_order').val(resp.data.submenu_order)
 					$('#department_id').val(resp.data.submenu_department)
-					$('.modal-title').html('<i class="fa fa-plus"></i> Edit Menu')
+					$('.modal-title').html('<i class="fas fa-plus"></i> Edit Menu')
 					$('#action').val('editRecord')
 					$('#save').val('Save changes')
 				})
