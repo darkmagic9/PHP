@@ -45,7 +45,7 @@
                             </div>
                             <!-- /.card-tools -->
 						</div>
-						<div class="card-body table-responsive">
+						<div class="card-body">
 							<table id="myTable" class="table table-striped">
 								<thead>
 									<tr>
@@ -184,7 +184,10 @@
 
 	<script>
 		$(function() {
-			let dataRecords = $('#myTable').DataTable();
+			let dataRecords = $('#myTable').DataTable({				
+                autoWidth: false,
+                responsive: true,
+			});
 
 			$('#myTable').on('click', '.update', function() {
 				let id = $(this).attr('id');
