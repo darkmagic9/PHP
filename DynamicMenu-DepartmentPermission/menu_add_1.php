@@ -110,7 +110,7 @@
                             </div>
                             <!-- /.card-tools -->
 						</div>
-						<form method="post" action="menu_adddb.php">
+						<form method="post" action="menu_adddb_1.php" id="addForm">
 							<div class="card-body">
 								<div class="form-group row">
 									<label for="inputMenuName" class="col-sm-3 col-form-label">Menu Name</label>
@@ -126,7 +126,8 @@
 								</div>
 							</div>					
 							<div class="card-footer">
-								<input name="menu_submit" class="btn btn-primary" type="submit" value="Add Menu" />
+    							<input type="hidden" name="action" id="action" value="addRecord" />
+								<input name="menu_submuitygit" class="btn btn-primary" type="submit" value="Add Menu" />
 							</div>
 						</form>
 					</div>
@@ -204,6 +205,25 @@
 					$('.modal-title').html('<i class="fas fa-plus"></i> Edit Menu')
 					$('#action').val('editRecord')
 					$('#save').val('Save changes')
+				})
+			})
+
+			$('#addForm').submit(function(e) {
+				e.preventDefault()
+				$.ajax({
+					type: 'POST',
+					url: $(this).attr('action'),
+					data: $(this).serialize()
+				}).done(function(resp) {
+					$('#addForm')[0].reset();
+					window.toastr.remove()
+					toastr.success('Data add is complete.')
+					setTimeout(() => {
+						location.reload()
+					}, 800)
+				}).fail(function(resp) {
+					window.toastr.remove()
+					toastr.error('Data add is fail!.')
 				})
 			})
 

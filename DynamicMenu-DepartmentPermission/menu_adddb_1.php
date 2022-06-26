@@ -8,7 +8,25 @@ $respons = [
 	'menu_icon'=> 'dddddddddddd',
 ];
 
-if (isset($_POST['action']) && $_POST['action'] == 'getRecord') {
+if(isset($_POST['action']) && $_POST['action'] == 'addRecord')
+{
+	$menu_name=$_POST['menu_name'];
+	$menu_icon=$_POST['menu_icon'];
+
+	if($menu_name!='')
+	{
+		$insertqry="INSERT INTO `menu`( `menu_name`, `menu_icon`) VALUES ('$menu_name','$menu_icon')";
+		$insertres=mysqli_query($con,$insertqry);
+		
+		$result = array(
+			'status'=> true,
+			'message' => 'Add data success'
+		);
+		echo json_encode($result);
+	}
+}
+
+elseif (isset($_POST['action']) && $_POST['action'] == 'getRecord') {
 	$menu_id = $_POST["data"];
 	$menulistqry = "SELECT * from menu where menu_status='Enable' AND menu_id='$menu_id'";
 	$menulistres = mysqli_query($con, $menulistqry);

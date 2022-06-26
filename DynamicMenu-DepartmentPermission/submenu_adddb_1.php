@@ -8,7 +8,29 @@ $respons = [
 	'submenu_icon'=> 'dddddddddddd',
 ];
 
-if (isset($_POST['action']) && $_POST['action'] == 'getRecord') {
+if(isset($_POST['action']) && $_POST['action'] == 'addRecord')
+{
+	$menu_id=$_POST['menu_id'];
+	$submenu_name=$_POST['submenu_name'];
+	$submenu_url=$_POST['submenu_url'];
+	$submenu_display=$_POST['submenu_display'];
+	$submenu_order=$_POST['submenu_order'];
+	$department_id=$_POST['department_id'];
+
+	if($submenu_name!='')
+	{
+		$insertqry="INSERT INTO `sub_menu`( `menu_id`, `submenu_name`, `submenu_url`, `submenu_display`, `submenu_order`,`submenu_department`) VALUES ('$menu_id','$submenu_name','$submenu_url','$submenu_display','$submenu_order','$department_id')";
+		$insertres=mysqli_query($con,$insertqry);
+		
+		$result = array(
+			'status'=> true,
+			'message' => 'Add data success'
+		);
+		echo json_encode($result);
+	}
+}
+
+elseif (isset($_POST['action']) && $_POST['action'] == 'getRecord') {
 	$subsubmenu_id = $_POST["data"];
 	$submenulistqry = "SELECT * from sub_menu where sub_menu.submenu_status='Enable' AND sub_menu.submenu_id='$subsubmenu_id'";
 	$submenulistres = mysqli_query($con, $submenulistqry);
