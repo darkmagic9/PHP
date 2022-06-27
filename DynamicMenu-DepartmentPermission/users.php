@@ -33,7 +33,7 @@
 								Users List
 							</h4>
                             <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="card-refresh" data-source="widgets.html" data-source-selector="#card-refresh-content" data-load-on-init="false">
+                                <button type="button" class="btn btn-tool" data-card-widget="card-refresh" data-source="users.php" data-source-selector="#card-refresh-content" data-load-on-init="false">
                                     <i class="fas fa-sync-alt"></i>
                                 </button>
                                 <button type="button" class="btn btn-tool" data-card-widget="maximize">
