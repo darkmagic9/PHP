@@ -173,7 +173,7 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="inputEmail3" class="col-sm-3 col-form-label">Sub Meno Order</label>
+									<label for="inputEmail3" class="col-sm-3 col-form-label">Sub Menu Order</label>
 									<div class="col-sm-9">
 										<select class="form-control select2" name="submenu_order">
 											<?php
