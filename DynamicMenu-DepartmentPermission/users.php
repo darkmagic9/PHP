@@ -178,6 +178,7 @@
             $('#addRecord').click(function(){
                 $('#editModal').modal('show');
                 $('#editForm')[0].reset();
+				$('#department_id').trigger('change')
                 $('.modal-title').html("<i class='fa fa-plus'></i> Add User");
                 $('#action').val('addRecord');
                 $('#save').val('Add');
@@ -199,6 +200,7 @@
 					$('#id').val(resp.data.user_id)
 					$('#user_name').val(resp.data.user_name)
 					$('#department_id').val(resp.data.user_department)
+					$('#department_id').trigger('change')
 					$('.modal-title').html('<i class="fas fa-plus"></i> Edit User')
 					$('#action').val('editRecord')
 					$('#save').val('Save changes')
@@ -217,7 +219,12 @@
 					$('#editForm')[0].reset();
 					$('#editModal').modal('hide');				
 					$('#save').attr('disabled', false);
+					window.toastr.remove()
+					toastr.success('Data update is complete.')
 					dataRecords.ajax.reload()
+				}).fail(function(resp) {
+					window.toastr.remove()
+					toastr.error('Data update is error.')
 				})
 			})
 

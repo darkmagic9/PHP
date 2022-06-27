@@ -193,7 +193,12 @@
 					$('#editForm')[0].reset();
 					$('#editModal').modal('hide');				
 					$('#save').attr('disabled', false);
+					window.toastr.remove()
+					toastr.success('Data update is complete.')
 					dataRecords.ajax.reload()
+				}).fail(function(resp) {
+					window.toastr.remove()
+					toastr.error('Data update is error.')
 				})
 			})
 
