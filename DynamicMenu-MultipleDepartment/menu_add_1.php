@@ -52,6 +52,7 @@
 										<th>S.No</th>
 										<th>Menu Name</th>
 										<th>Menu Icon</th>
+										<th>Menu Order</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -66,6 +67,7 @@
 											<td><?php echo $menudata['menu_id']; ?></td>
 											<td><?php echo $menudata['menu_name']; ?></td>
 											<td><?php echo $menudata['menu_icon']; ?></td>
+											<td><?php echo $menudata['menu_order']; ?></td>
 											<td>
 											<div class="btn-group" role="group">
 												<button type="button" class="btn btn-sm btn-warning text-white update" id="<?php echo $menudata['menu_id']; ?>" data-id="<?php echo $menudata['menu_id']; ?>" data-index="<?php echo $menudata['menu_id']; ?>">
@@ -124,6 +126,18 @@
 										<input type="text" name="menu_icon" placeholder="Menu Icon" class="form-control" />
 									</div>
 								</div>
+								<div class="form-group row">
+									<label for="inputEmail3" class="col-sm-3 col-form-label">Menu Order</label>
+									<div class="col-sm-9">
+										<select class="form-control select2" name="menu_order">
+											<?php
+											for ($i = 0; $i < 10; $i++) {
+											?>
+												<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+											<?php } ?>
+										</select>
+									</div>
+								</div>
 							</div>					
 							<div class="card-footer">
     							<input type="hidden" name="actionAdd" id="actionAdd" value="addRecord" />
@@ -159,6 +173,18 @@
 								<input type="text" id="menu_icon" name="menu_icon" placeholder="Menu Icon" class="form-control" />
 							</div>
 						</div>
+						<div class="form-group row">
+							<label for="inputEmail3" class="col-sm-3 col-form-label">Menu Order</label>
+							<div class="col-sm-9">
+								<select class="form-control select2" id="menu_order" name="menu_order">
+									<?php
+									for ($i = 0; $i < 10; $i++) {
+									?>
+										<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
 					</div>
 					<div class="modal-footer">
     					<input type="hidden" name="id" id="id" />
@@ -184,6 +210,11 @@
 
 	<script>
 		$(function() {
+			//Initialize Select2 Elements
+			$('.select2').select2({				
+				width: '100%',
+			})
+
 			let dataRecords = $('#myTable').DataTable({				
                 autoWidth: false,
                 responsive: true,
@@ -205,6 +236,7 @@
 					$('#id').val(resp.data.menu_id)
 					$('#menu_name').val(resp.data.menu_name)
 					$('#menu_icon').val(resp.data.menu_icon)
+					$('#menu_order').val(resp.data.menu_order)
 					$('.modal-title').html('<i class="fas fa-plus"></i> Edit Menu')
 					$('#action').val('editRecord')
 					$('#save').val('Save changes')

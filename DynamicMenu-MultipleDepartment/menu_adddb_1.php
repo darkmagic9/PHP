@@ -12,10 +12,11 @@ if(isset($_POST['actionAdd']) && $_POST['actionAdd'] == 'addRecord')
 {
 	$menu_name=$_POST['menu_name'];
 	$menu_icon=$_POST['menu_icon'];
+	$menu_order=$_POST['menu_order'];
 
 	if($menu_name!='')
 	{
-		$insertqry="INSERT INTO `menu`( `menu_name`, `menu_icon`) VALUES ('$menu_name','$menu_icon')";
+		$insertqry="INSERT INTO `menu`( `menu_name`, `menu_icon`, `menu_order`) VALUES ('$menu_name','$menu_icon',$menu_order)";
 		$insertres=mysqli_query($con,$insertqry);
 		
 		$result = array(
@@ -47,8 +48,9 @@ elseif (isset($_POST['action']) && $_POST['action'] == 'editRecord') {
 	$menu_id = $_POST["id"];
 	$menu_name = $_POST["menu_name"];
 	$menu_icon = $_POST["menu_icon"];
+	$menu_order = $_POST["menu_order"];
 	if ($menu_id != '') {
-		$updateqry="UPDATE menu SET menu_name='$menu_name', menu_icon='$menu_icon' WHERE menu_id='$menu_id'";
+		$updateqry="UPDATE menu SET menu_name='$menu_name', menu_icon='$menu_icon', menu_order='$menu_order' WHERE menu_id='$menu_id'";
 		$updateres=mysqli_query($con,$updateqry);
 
 		$result = array(

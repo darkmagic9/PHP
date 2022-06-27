@@ -70,7 +70,7 @@
         $user_permission = 'False';
       }
 
-      $menulistqry = "SELECT * FROM menu where menu_status='Enable'";
+      $menulistqry = "SELECT * FROM menu where menu_status='Enable' order by menu_order asc";
       $menulistres = mysqli_query($con, $menulistqry);
       while ($menulistdata = mysqli_fetch_assoc($menulistres)) {
         $menu_id = $menulistdata['menu_id'];
