@@ -8,7 +8,7 @@ $respons = [
 	'menu_icon'=> 'dddddddddddd',
 ];
 
-if(isset($_POST['action']) && $_POST['action'] == 'addRecord')
+if(isset($_POST['actionAdd']) && $_POST['actionAdd'] == 'addRecord')
 {
 	$menu_name=$_POST['menu_name'];
 	$menu_icon=$_POST['menu_icon'];

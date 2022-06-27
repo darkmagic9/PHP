@@ -188,7 +188,7 @@
 								</div>
 							</div>					
 							<div class="card-footer">
-    							<input type="hidden" name="action" id="action" value="addRecord" />
+    							<input type="hidden" name="actionAdd" id="actionAdd" value="addRecord" />
 								<input name="submenu_submit" class="btn btn-primary" type="submit" value="Add Sub Menu" />
 							</div>
 						</form>

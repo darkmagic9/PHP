@@ -126,7 +126,7 @@
 								</div>
 							</div>					
 							<div class="card-footer">
-    							<input type="hidden" name="action" id="action" value="addRecord" />
+    							<input type="hidden" name="actionAdd" id="actionAdd" value="addRecord" />
 								<input name="menu_submuitygit" class="btn btn-primary" type="submit" value="Add Menu" />
 							</div>
 						</form>
