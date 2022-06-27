@@ -85,7 +85,7 @@
 						<div class="form-group row">
 							<label for="inputEmail3" class="col-sm-3 col-form-label">Department</label>
 							<div class="col-sm-9">
-								<select class="form-control" id="department_id" name="department_id" required>
+								<select class="form-control select2" id="department_id" name="department_id" required>
                                     <option value="">Select Department</option>
                                     <?php
                                     $deptlistqry = "SELECT * from department where department_status='Enable'";
@@ -121,6 +121,11 @@
 
 	<script>
         $(function() {
+			//Initialize Select2 Elements
+			$('.select2').select2({				
+				width: '100%',
+			})
+
             let dataRecords = $('#myTable').DataTable({
                 autoWidth: false,
                 responsive: true,
@@ -212,7 +217,7 @@
 					$('#editForm')[0].reset();
 					$('#editModal').modal('hide');				
 					$('#save').attr('disabled', false);
-					location.reload()
+					dataRecords.ajax.reload()
 				})
 			})
 
@@ -240,7 +245,7 @@
 								icon: 'success',
 								confirmButtunText: 'OK'
 							}).then((result) => {
-								location.reload()
+								dataRecords.ajax.reload()
 							})
 						})
 					}

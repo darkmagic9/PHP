@@ -193,7 +193,7 @@
 					$('#editForm')[0].reset();
 					$('#editModal').modal('hide');				
 					$('#save').attr('disabled', false);
-					location.reload()
+					dataRecords.ajax.reload()
 				})
 			})
 
@@ -221,7 +221,7 @@
 								icon: 'success',
 								confirmButtunText: 'OK'
 							}).then((result) => {
-								location.reload()
+								dataRecords.ajax.reload()
 							})
 						})
 					}
