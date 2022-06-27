@@ -61,11 +61,9 @@
 								<tbody>
 									<?php
 									include 'database.php';
-									$menulistqry  = "SELECT sub_menu.*,menu.menu_name,department.department_name from sub_menu ";
+									$menulistqry  = "SELECT sub_menu.*,menu.menu_name from sub_menu ";
 									$menulistqry .= "inner join menu on menu.menu_id=sub_menu.menu_id ";
-									$menulistqry .= "inner join submenu_department ON submenu_department.sub_menu_id=sub_menu.submenu_id ";
-									$menulistqry .= "inner join department on department.department_id=submenu_department.department_id ";
-									$menulistqry .= "where submenu_status='Enable' ORDER BY department_name, menu.menu_id, submenu_order";
+									$menulistqry .= "where submenu_status='Enable' ORDER BY menu.menu_id, submenu_order";
 									$menulistres = mysqli_query($con, $menulistqry);
 									$i = 1;
 									while ($menudata = mysqli_fetch_assoc($menulistres)) {
@@ -76,7 +74,21 @@
 											<td><?php echo $menudata['submenu_name']; ?></td>
 											<td><?php echo $menudata['submenu_url']; ?></td>
 											<td><?php echo $menudata['submenu_order']; ?></td>
-											<td><?php echo $menudata['department_name']; ?></td>
+											<td>
+												<?php 
+												$deptlistqry  = "SELECT sub_menu.*,department.department_name from sub_menu ";
+												$deptlistqry .= "inner join submenu_department on submenu_department.sub_menu_id=sub_menu.submenu_id ";
+												$deptlistqry .= "inner join department on department.department_id=submenu_department.department_id ";
+												$deptlistqry .= "where submenu_status='Enable' AND submenu_id='".$menudata['submenu_id']."'";
+												$deptlistres = mysqli_query($con, $deptlistqry);
+												while ($deptdata = mysqli_fetch_assoc($deptlistres)) {
+												?>
+												<span class="badge badge-info"><?php echo $deptdata['department_name']; ?></span>
+												<?php 
+												}
+												?>
+											
+											</td>
 											<td>
 											<div class="btn-group" role="group">
 												<button type="button" class="btn btn-sm btn-warning text-white update" id="<?php echo $menudata['submenu_id']; ?>" data-id="<?php echo $menudata['submenu_id']; ?>" data-index="<?php echo $menudata['submenu_id']; ?>">
@@ -126,7 +138,7 @@
 								<div class="form-group row">
 									<label for="inputEmail3" class="col-sm-3 col-form-label">Menu</label>
 									<div class="col-sm-9">
-										<select class="form-control" name="menu_id">
+										<select class="form-control select2" name="menu_id">
 											<option value="">Select Menu</option>
 											<?php
 											$menulistqry = "SELECT * from menu where menu_status='Enable'";
@@ -154,7 +166,7 @@
 								<div class="form-group row">
 									<label for="inputEmail3" class="col-sm-3 col-form-label">Show/Visible</label>
 									<div class="col-sm-9">
-										<select class="form-control" name="submenu_display">
+										<select class="form-control select2" name="submenu_display">
 											<option value="Yes">Yes</option>
 											<option value="No">No</option>
 										</select>
@@ -163,7 +175,7 @@
 								<div class="form-group row">
 									<label for="inputEmail3" class="col-sm-3 col-form-label">Sub Meno Order</label>
 									<div class="col-sm-9">
-										<select class="form-control" name="submenu_order">
+										<select class="form-control select2" name="submenu_order">
 											<?php
 											for ($i = 0; $i < 10; $i++) {
 											?>
@@ -213,8 +225,7 @@
 						<div class="form-group row">
 							<label for="inputEmail3" class="col-sm-3 col-form-label">Menu</label>
 							<div class="col-sm-9">
-								<select class="form-control" id="menu_id" name="menu_id">
-									<option value="">Select Menu</option>
+								<select class="form-control select2" id="menu_id" name="menu_id" data-placeholder="Select Menu">
 									<?php
 									$menulistqry = "SELECT * from menu where menu_status='Enable'";
 									$menulistres = mysqli_query($con, $menulistqry);
@@ -241,7 +252,7 @@
 						<div class="form-group row">
 							<label for="inputEmail3" class="col-sm-3 col-form-label">Show/Visible</label>
 							<div class="col-sm-9">
-								<select class="form-control" id="submenu_display" name="submenu_display">
+								<select class="form-control select2" id="submenu_display" name="submenu_display">
 									<option value="Yes">Yes</option>
 									<option value="No">No</option>
 								</select>
@@ -250,7 +261,7 @@
 						<div class="form-group row">
 							<label for="inputEmail3" class="col-sm-3 col-form-label">Sub Meno Order</label>
 							<div class="col-sm-9">
-								<select class="form-control" id="submenu_order" name="submenu_order">
+								<select class="form-control select2" id="submenu_order" name="submenu_order">
 									<?php
 									for ($i = 0; $i < 10; $i++) {
 									?>
@@ -262,7 +273,7 @@
 						<div class="form-group row">
 							<label for="inputEmail3" class="col-sm-3 col-form-label">Department</label>
 							<div class="col-sm-9">
-								<select class="form-control" id="department_id" name="department_id">
+								<select class="form-control select2" id="department_id" name="department_id[]" multiple="multiple" data-placeholder="Select Department">
 									<option value="">Select Department</option>
 									<?php
 									$deptlistqry = "SELECT * from department where department_status='Enable'";
@@ -323,12 +334,12 @@
 					console.log(resp);
 					$('#editModal').modal('show')
 					$('#id').val(resp.data.submenu_id)
-					$('#menu_id').val(resp.data.menu_id)
+					$('#menu_id').val(resp.data.menu_id).trigger('change')
 					$('#submenu_name').val(resp.data.submenu_name)
 					$('#submenu_url').val(resp.data.submenu_url)
-					$('#submenu_display').val(resp.data.submenu_display)
-					$('#submenu_order').val(resp.data.submenu_order)
-					$('#department_id').val(resp.data.submenu_department)
+					$('#submenu_display').val(resp.data.submenu_display).trigger('change')
+					$('#submenu_order').val(resp.data.submenu_order).trigger('change')
+					$('#department_id').val(resp.data.submenu_department).trigger('change')
 					$('.modal-title').html('<i class="fas fa-plus"></i> Edit Menu')
 					$('#action').val('editRecord')
 					$('#save').val('Save changes')
