@@ -131,7 +131,7 @@
 									<div class="col-sm-9">
 										<select class="form-control select2" name="menu_order">
 											<?php
-											for ($i = 0; $i < 10; $i++) {
+											for ($i = 0; $i <= 100; $i++) {
 											?>
 												<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
 											<?php } ?>
@@ -178,7 +178,7 @@
 							<div class="col-sm-9">
 								<select class="form-control select2" id="menu_order" name="menu_order">
 									<?php
-									for ($i = 0; $i < 10; $i++) {
+									for ($i = 0; $i <= 100; $i++) {
 									?>
 										<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
 									<?php } ?>
@@ -236,7 +236,7 @@
 					$('#id').val(resp.data.menu_id)
 					$('#menu_name').val(resp.data.menu_name)
 					$('#menu_icon').val(resp.data.menu_icon)
-					$('#menu_order').val(resp.data.menu_order)
+					$('#menu_order').val(resp.data.menu_order).trigger('change')
 					$('.modal-title').html('<i class="fas fa-plus"></i> Edit Menu')
 					$('#action').val('editRecord')
 					$('#save').val('Save changes')
