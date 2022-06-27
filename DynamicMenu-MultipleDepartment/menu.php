@@ -222,7 +222,7 @@
               <a href="submenu_add.php">SubMenu</a>
             </div>
             <div class="col-4 text-center">
-              <a href="department_permission.php">Permission</a>
+              <a href="user_permission.php">Permission</a>
             </div>
           </div>
           <!-- /.row -->

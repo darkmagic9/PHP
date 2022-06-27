@@ -40,9 +40,9 @@
 								include 'database.php';
 								$menulistqry  = "SELECT sub_menu.*,menu.menu_name,department.department_name from sub_menu ";
 								$menulistqry .= "inner join menu on menu.menu_id=sub_menu.menu_id ";
-								$menulistqry .= "INNER JOIN submenu_department ON submenu_department.sub_menu_id=sub_menu.submenu_id ";
-								$menulistqry .= "INNER JOIN department ON department.department_id=submenu_department.department_id ";
-								$menulistqry .= "WHERE submenu_status='Enable' AND department.department_id=$userdepartment ORDER BY department_name, menu.menu_id, submenu_order";
+								$menulistqry .= "inner join submenu_department ON submenu_department.sub_menu_id=sub_menu.submenu_id ";
+								$menulistqry .= "inner join department on department.department_id=submenu_department.department_id ";
+								$menulistqry .= "where submenu_status='Enable' ORDER BY department_name, menu.menu_id, submenu_order";
 								$menulistres = mysqli_query($con, $menulistqry);
 								while ($menudata = mysqli_fetch_assoc($menulistres)) {
 								?>
