@@ -4,13 +4,12 @@
 
 <body>
 	<?php include 'menu.php'; ?>
-	
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row pt-3">
 			<div class="col-md-12">
 				<div class="card card-primary">
 					<div class="card-header">
-						<h4>User Permission</h4>
+						<h4 class="card-title">User Permission</h4>
 					</div>
 					<form method="post" action="user_permission_list.php">
 						<div class="card-body">
@@ -37,7 +36,6 @@
 			</div>
 		</div>
 	</div>
-
 	<?php include 'footer.php'; ?>
 </body>
 

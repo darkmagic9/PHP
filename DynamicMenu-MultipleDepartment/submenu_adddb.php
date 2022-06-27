@@ -17,13 +17,13 @@ if(isset($_POST['submenu_submit']))
 
 		$lastid=$con->insert_id;
 	
-	foreach ($_POST['department_id'] as $key => $value) {
-		$department_id=$_POST['department_id'][$key];
+		foreach ($_POST['department_id'] as $key => $value) {
+			$department_id=$_POST['department_id'][$key];
 
-		$subdeptqry="INSERT INTO `submenu_department`( `menu_id`, `sub_menu_id`, `department_id`) VALUES ('$menu_id','$lastid','$department_id')";
-		$subdeptres=mysqli_query($con,$subdeptqry);
+			$subdeptqry="INSERT INTO `submenu_department`( `menu_id`, `sub_menu_id`, `department_id`) VALUES ('$menu_id','$lastid','$department_id')";
+			$subdeptres=mysqli_query($con,$subdeptqry);
+		}
 	}
-}
 }
 echo '<script>alert("Sub Menu is added successfully.");
 		window.location="submenu_add.php";
