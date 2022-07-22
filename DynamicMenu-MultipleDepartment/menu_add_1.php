@@ -112,8 +112,8 @@
                             </div>
                             <!-- /.card-tools -->
 						</div>
-						<form method="post" action="menu_adddb_1.php" id="addForm">
-							<div class="card-body">
+						<div class="card-body">
+							<form method="post" action="menu_adddb_1.php" id="addForm">
 								<div class="form-group row">
 									<label for="inputMenuName" class="col-sm-3 col-form-label">Menu Name</label>
 									<div class="col-sm-9">
@@ -138,12 +138,10 @@
 										</select>
 									</div>
 								</div>
-							</div>					
-							<div class="card-footer">
     							<input type="hidden" name="actionAdd" id="actionAdd" value="addRecord" />
 								<input name="menu_submuitygit" class="btn btn-primary" type="submit" value="Add Menu" />
-							</div>
-						</form>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>

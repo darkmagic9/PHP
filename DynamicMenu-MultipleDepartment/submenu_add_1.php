@@ -133,8 +133,8 @@
                             </div>
                             <!-- /.card-tools -->
 						</div>
-						<form method="post" action="submenu_adddb_1.php" id="addForm">
-							<div class="card-body">
+						<div class="card-body">
+							<form method="post" action="submenu_adddb_1.php" id="addForm">
 								<div class="form-group row">
 									<label for="inputEmail3" class="col-sm-3 col-form-label">Menu</label>
 									<div class="col-sm-9">
@@ -199,12 +199,10 @@
 										</select>
 									</div>
 								</div>
-							</div>					
-							<div class="card-footer">
     							<input type="hidden" name="actionAdd" id="actionAdd" value="addRecord" />
 								<input name="submenu_submit" class="btn btn-primary" type="submit" value="Add Sub Menu" />
-							</div>
-						</form>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
